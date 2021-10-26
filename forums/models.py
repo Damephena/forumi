@@ -19,7 +19,7 @@ CATEGORY_TYPE = (
 
 
 class Discussion(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="discussions")
     title = models.CharField(max_length=130)
     slug = models.SlugField(unique=True, null=True, blank=True, editable=False)
     content = models.TextField()

@@ -46,7 +46,10 @@ class DashboardViewset(viewsets.ModelViewSet):
         if not request.user.is_superuser:
             queryset = User.objects.get(id=request.user.id)
             serializer = serializers.RetrieveUserSerializer(queryset, many=False)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response({
+                "discussion_count": request.user.discussions.all().count(),
+                **serializer.data
+            }, status=status.HTTP_200_OK)
 
         queryset = User.objects.all()
         query = self.paginate_queryset(queryset)

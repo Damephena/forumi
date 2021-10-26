@@ -9,6 +9,13 @@ from forums import serializers
 
 
 class DiscussionViewset(viewsets.ModelViewSet):
+
+    """
+    create: Create a Discussion thread.
+    list: List all discussions in forum
+    partial_update: Update discussion info as authenticated author.
+    destroy: Delete discussion info as authenticated author.
+    """
     queryset = Discussion.objects.all().order_by("-created_at")
     serializer_class = serializers.RetrieveDiscussionSerializer
     http_method_names = ["get", "post", "patch", "delete"]

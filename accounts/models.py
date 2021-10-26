@@ -28,17 +28,11 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
 
-    # def unique_username(self):
-    #     if not username:
-    #         self.username = 
-
 
 class UserProfile(models.Model):
 
     """User Profile Model"""
     user = models.OneToOneField("accounts.User", related_name="profiles", on_delete=models.CASCADE)
-    # image = models.ImageField(
-    #     upload_to='images/user/%Y/%m/', blank=True, null=True, related_name="profile_photo")
 
     def __str__(self):
         return self.user.first_name
@@ -52,34 +46,34 @@ def send_email_notification(sender, subject, body, plaintext_message=None, to=No
             from_email=sender,
             to=to
         )
-        msg.attach_alternative(body, 'text/html')
+        msg.attach_alternative(body, "text/html")
         return msg.send(fail_silently=False)
     except:
-        return {'detail': 'Email notification not sent'}
+        return {"detail": "Email notification not sent"}
 
 @shared_task
 def _send_email(*args, **kwargs):
     send_email_notification(*args, **kwargs)
 
 def send_email(*args, **kwargs):
-    _send_email(*args, **kwargs)
+    _send_email.delay(*args, **kwargs)
 
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
 
-    '''Send link to reset user's Password'''
+    """Send link to reset user"s Password"""
     # send email to the user
     context = {
-        'first_name': reset_password_token.user.first_name,
-        'email': reset_password_token.user.email,
-        'reset_password_url': f"?token={reset_password_token.key}"
+        "first_name": reset_password_token.user.first_name,
+        "email": reset_password_token.user.email,
+        "reset_password_url": f"?token={reset_password_token.key}"
     }
 
     # render email text
     email_sender = DEFAULT_FROM_EMAIL
-    email_subject = 'Password Reset'
-    email_body = render_to_string('email/user_reset_password.html', context)
-    email_plaintext_message = render_to_string('email/user_reset_password.txt', context)
+    email_subject = "Password Reset"
+    email_body = render_to_string("email/user_reset_password.html", context)
+    email_plaintext_message = render_to_string("email/user_reset_password.txt", context)
 
     send_email(
         email_sender, email_subject, email_body, email_plaintext_message,
