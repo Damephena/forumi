@@ -1,0 +1,11 @@
+__pycache__
+.vscode
+.env
+db.sqlite3
+htmlcov
+.coverage
+.pytest_cache
+dump.rdb
+celerybeat-*
+info
+celerybeat.pid

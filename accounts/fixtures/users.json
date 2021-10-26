@@ -1,0 +1,37 @@
+[
+    {
+        "model": "accounts.user",
+        "pk": 1,
+        "fields" : {
+            "email": "test1@gmail.com",
+            "password": "asdf",
+            "username": "newuser",
+            "first_name": "Test",
+            "last_name": "User 1",
+            "is_superuser": true,
+            "is_staff": true
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": 2,
+        "fields" : {
+            "email": "test2@gmail.com",
+            "password": "asdf",
+            "username": "user2",
+            "first_name": "Friendly",
+            "last_name": "User 2"
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": 3,
+        "fields" : {
+            "email": "test3@gmail.com",
+            "password": "asdf",
+            "username": "user3",
+            "first_name": "Kind",
+            "last_name": "User 3"
+        }
+    }
+]
